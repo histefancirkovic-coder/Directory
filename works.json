@@ -7,9 +7,13 @@
     "year": 2026,
     "added": "2026-11-17",
     "description": "Brand identity for Tempo, a stablecoin-focused blockchain for global payments — visual, motion and sound design, a custom typeface and website.",
-    "type": ["Case study"],
+    "type": [
+      "Case study"
+    ],
     "discipline": [],
-    "industry": ["Finance"],
+    "industry": [
+      "Finance"
+    ],
     "tool": [],
     "thumbnail": "https://studiodumbar.com/media/pages/work/tempo/17fd7a5745-1781597840/07-10x10-blur1.png"
   },
@@ -21,7 +25,9 @@
     "year": 2026,
     "added": "2026-11-17",
     "duration": "1:55",
-    "type": ["Feature launch"],
+    "type": [
+      "Feature launch"
+    ],
     "discipline": [],
     "industry": [],
     "tool": []
@@ -34,9 +40,48 @@
     "year": 2026,
     "added": "2026-11-17",
     "duration": "1:48",
-    "type": ["Feature launch"],
+    "type": [
+      "Feature launch"
+    ],
     "discipline": [],
-    "industry": ["Finance"],
+    "industry": [
+      "Finance"
+    ],
+    "tool": []
+  },
+  {
+    "id": "base44-build-it-your-way",
+    "title": "Build it your way with Base44",
+    "client": "Base44",
+    "url": "https://www.youtube.com/watch?v=FXLmWojBELE",
+    "year": 2026,
+    "added": "2026-11-17",
+    "description": "Promo for Base44, a website and app builder.",
+    "type": [
+      "Promo"
+    ],
+    "discipline": [],
+    "industry": [
+      "SaaS"
+    ],
+    "tool": []
+  },
+  {
+    "id": "elevenlabs-agents-architect",
+    "title": "Introducing ElevenAgents Architect",
+    "client": "ElevenLabs",
+    "url": "https://www.youtube.com/watch?v=kfkUcxtX2b4",
+    "year": 2026,
+    "added": "2026-11-17",
+    "duration": "1:07",
+    "description": "Feature launch from ElevenLabs, the AI audio and voice technology company.",
+    "type": [
+      "Feature launch"
+    ],
+    "discipline": [],
+    "industry": [
+      "AI"
+    ],
     "tool": []
   }
 ]
