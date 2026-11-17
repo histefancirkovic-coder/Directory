@@ -8,7 +8,7 @@
   'use strict';
 
   var ROOT_ID = 'sc-directory';
-  var REPO_RAW = 'https://raw.githubusercontent.com/histefancirkovic-coder/directory/main/';
+  var REPO_RAW = 'https://raw.githubusercontent.com/histefancirkovic-coder/Directory/main/';
 
   // Filter groups. `opts` sets the preferred order; any extra values found in the data are appended automatically.
   var GROUPS = [

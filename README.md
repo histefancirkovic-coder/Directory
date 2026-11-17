@@ -36,8 +36,8 @@ Filterable directory of motion work for `stefancirkovic.com/directory`.
 
 ```html
 <div id="sc-directory"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/histefancirkovic-coder/directory@v1/directory.css">
-<script src="https://cdn.jsdelivr.net/gh/histefancirkovic-coder/directory@v1/directory.js" defer></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/histefancirkovic-coder/Directory@main/directory.css">
+<script src="https://cdn.jsdelivr.net/gh/histefancirkovic-coder/Directory@main/directory.js" defer></script>
 ```
 
-To ship a widget update: commit, then move the `v1` tag (or create `v1.x`) — jsDelivr serves tagged versions.
+Widget changes go live via jsDelivr `@main` (cached up to ~12h; purge at https://www.jsdelivr.com/tools/purge). `works.json` is read from raw.githubusercontent.com and updates within ~5 minutes.
