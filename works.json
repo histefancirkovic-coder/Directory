@@ -1,0 +1,42 @@
+[
+  {
+    "id": "studio-dumbar-tempo",
+    "title": "Tempo",
+    "client": "Studio Dumbar",
+    "url": "https://studiodumbar.com/work/tempo",
+    "year": 2026,
+    "added": "2026-11-17",
+    "description": "Brand identity for Tempo, a stablecoin-focused blockchain for global payments — visual, motion and sound design, a custom typeface and website.",
+    "type": ["Case study"],
+    "discipline": [],
+    "industry": ["Finance"],
+    "tool": [],
+    "thumbnail": "https://studiodumbar.com/media/pages/work/tempo/17fd7a5745-1781597840/07-10x10-blur1.png"
+  },
+  {
+    "id": "ramp-private-equity",
+    "title": "Introducing Ramp for Private Equity",
+    "client": "Ramp",
+    "url": "https://www.youtube.com/watch?v=1eioyxp8kuo",
+    "year": 2026,
+    "added": "2026-11-17",
+    "duration": "1:55",
+    "type": ["Feature launch"],
+    "discipline": [],
+    "industry": [],
+    "tool": []
+  },
+  {
+    "id": "ramp-glass",
+    "title": "Introducing Glass",
+    "client": "Ramp",
+    "url": "https://www.youtube.com/watch?v=wxc_1JHVLlA",
+    "year": 2026,
+    "added": "2026-11-17",
+    "duration": "1:48",
+    "type": ["Feature launch"],
+    "discipline": [],
+    "industry": ["Finance"],
+    "tool": []
+  }
+]
