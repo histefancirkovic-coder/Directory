@@ -41,3 +41,14 @@ Filterable directory of motion work for `stefancirkovic.com/directory`.
 ```
 
 Widget changes go live via jsDelivr `@main` (cached up to ~12h; purge at https://www.jsdelivr.com/tools/purge). `works.json` is read from raw.githubusercontent.com and updates within ~5 minutes.
+
+## Chrome extension (`extension/`)
+
+Adds the page you're on to the directory in one click.
+
+1. Download this repo (Code → Download ZIP) or the `extension` zip, unzip.
+2. Chrome → `chrome://extensions` → turn on **Developer mode** → **Load unpacked** → pick the `extension` folder.
+3. Create a GitHub fine-grained token: Settings → Developer settings → Fine-grained tokens → *Only select repositories: Directory* → Permissions → **Contents: Read and write**.
+4. Click the extension icon → paste the token → Save.
+
+On any YouTube / Vimeo / X / Pinterest / Instagram / LinkedIn / case-study page: open the extension, check title, client and tags, pick a thumbnail (page image, screenshot, upload) and hit **Add to Directory**. If the link is already in the directory, the extension loads it so you can edit it.
