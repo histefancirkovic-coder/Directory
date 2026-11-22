@@ -2301,5 +2301,20 @@
     "tool": [
       "After Effects"
     ]
+  },
+  {
+    "id": "intently-fomo",
+    "title": "Fomo",
+    "client": "Intently",
+    "url": "https://intently.agency/works/fomo",
+    "year": 2026,
+    "added": "2026-11-22",
+    "type": [
+      "Case study"
+    ],
+    "discipline": [],
+    "industry": [],
+    "tool": [],
+    "thumbnail": "thumbs/intently-fomo.jpg"
   }
 ]
