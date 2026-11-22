@@ -83,5 +83,20 @@
       "AI"
     ],
     "tool": []
+  },
+  {
+    "id": "hex-hex-brand-agency-for-technology-companies",
+    "title": "HEX — Brand agency for technology companies",
+    "client": "HEX",
+    "url": "https://hex.inc/",
+    "year": 2026,
+    "added": "2026-11-22",
+    "type": [
+      "Case study"
+    ],
+    "discipline": [],
+    "industry": [],
+    "tool": [],
+    "thumbnail": "thumbs/hex-hex-brand-agency-for-technology-companies.jpg"
   }
 ]
