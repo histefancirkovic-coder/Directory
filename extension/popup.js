@@ -44,7 +44,7 @@ function setMsg(el, text, kind) { el.textContent = text; el.className = 'msg' + 
 
 /* ---------------- GitHub ---------------- */
 async function gh(path, opts = {}) {
-  const res = await fetch('https://api.github.com/repos/' + state.repo + '/' + path, {
+  const res = await fetch('https://api.github.com/repos/' + state.repo.trim().replace(/^\/+|\/+$/g, '') + (path ? '/' + path : ''), {
     ...opts,
     headers: { Authorization: 'Bearer ' + state.token, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', ...(opts.headers || {}) }
   });
