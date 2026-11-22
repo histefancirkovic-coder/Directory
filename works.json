@@ -2273,5 +2273,25 @@
     "discipline": [],
     "industry": [],
     "tool": []
+  },
+  {
+    "id": "openai-apps-in-chatgpt",
+    "title": "Apps in ChatGPT",
+    "client": "OpenAI",
+    "url": "https://www.youtube.com/watch?v=2C4Cs6503gw&list=PL_hxSJOPvmApXZtFLjSoEjaBOO9ctY6b4&index=5",
+    "year": 2025,
+    "added": "2026-11-22",
+    "duration": "1:09",
+    "type": [
+      "Demo"
+    ],
+    "discipline": [],
+    "industry": [
+      "AI",
+      "SaaS"
+    ],
+    "tool": [
+      "After Effects"
+    ]
   }
 ]
