@@ -52,3 +52,7 @@ Adds the page you're on to the directory in one click.
 4. Click the extension icon → paste the token → Save.
 
 On any YouTube / Vimeo / X / Pinterest / Instagram / LinkedIn / case-study page: open the extension, check title, client and tags, pick a thumbnail (page image, screenshot, upload) and hit **Add to Directory**. If the link is already in the directory, the extension loads it so you can edit it.
+
+### Importing a YouTube playlist
+
+Open the playlist page (`youtube.com/playlist?list=…`, private playlists work too), click the extension, pick the tags for the whole batch and hit **Import**. It scrolls the playlist to load every video, skips anything already in the directory and adds the rest in one commit. Run it again later to pick up new additions.

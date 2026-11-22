@@ -92,7 +92,14 @@ function scrape() {
   } else if (/vimeo\.com$/.test(host)) {
     out.channel = txt('[data-testid="clip-owner-name"]') || '';
   }
-  out.title = (out.title || '').trim();
+  out.title = (out.title || '').replace(/^\(\d+\)\s*/, '').trim();
+  if (/instagram\.com$/.test(host)) {
+    if (/^instagram$/i.test(out.title)) out.title = '';
+    const m = location.pathname.match(/^\/([\w.]+)\/(?:p|reel|tv)\//) || location.pathname.match(/^\/([\w.]+)\/?$/);
+    if (m && !out.channel) out.channel = m[1];
+    const am = (out.description || '').match(/^[\d,.KkMm]+ likes?, [\d,.KkMm]+ comments? - ([\w.]+) on /);
+    if (am) out.channel = am[1];
+  }
   return out;
 }
 
@@ -185,6 +192,15 @@ async function init() {
   try { await loadWorks(); }
   catch (e) { $('loading').innerHTML = '<p class="hint">Couldn’t reach GitHub: ' + e.message + '. Check the token in settings.</p>'; $('settings').hidden = false; return; }
 
+  // playlist?
+  let listId = null, onPlaylistPage = false;
+  try { const u = new URL(tab.url); if (/(^|\.)youtube\.com$/.test(u.hostname)) { listId = u.searchParams.get('list'); onPlaylistPage = u.pathname === '/playlist'; } } catch (e) {}
+  if (listId && onPlaylistPage) { initPlaylist(listId); return; }
+  if (listId && !/^(WL|LL)$/.test(listId)) {
+    $('plBanner').hidden = false;
+    $('plOpen').onclick = async () => { await chrome.tabs.update(tab.id, { url: 'https://www.youtube.com/playlist?list=' + listId }); window.close(); };
+  }
+
   // prefill
   const p = state.page;
   $('url').value = p.url; $('title').value = p.title || '';
@@ -215,6 +231,92 @@ async function init() {
   else if (p.image) setThumb('og');
   else setThumb('none');
 }
+
+/* ---------------- playlist import ---------------- */
+async function scrapePlaylist() {
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  const items = () => document.querySelectorAll('ytd-playlist-video-renderer');
+  let last = -1, stable = 0;
+  for (let i = 0; i < 60 && stable < 3; i++) {
+    const n = items().length;
+    if (n === last) stable++; else stable = 0;
+    last = n;
+    window.scrollTo(0, document.documentElement.scrollHeight);
+    const cont = document.querySelector('ytd-continuation-item-renderer');
+    if (cont) cont.scrollIntoView();
+    await sleep(900);
+  }
+  window.scrollTo(0, 0);
+  const now = new Date().getFullYear();
+  const out = [];
+  items().forEach(el => {
+    const a = el.querySelector('a#video-title');
+    if (!a) return;
+    const m = (a.getAttribute('href') || '').match(/[?&]v=([\w-]{11})/);
+    if (!m) return;
+    const title = (a.getAttribute('title') || a.textContent || '').trim();
+    if (!title || /^\[(Private|Deleted) video\]$/i.test(title)) return;
+    const ch = el.querySelector('ytd-channel-name a, #channel-name a, ytd-channel-name #text');
+    let dur = '';
+    el.querySelectorAll('ytd-thumbnail-overlay-time-status-renderer, badge-shape, .badge-shape-wiz__text, #time-status #text').forEach(b => {
+      const t = (b.textContent || '').trim(); if (!dur && /^\d{1,2}(:\d{2}){1,2}$/.test(t)) dur = t;
+    });
+    let year = now;
+    const info = (el.querySelector('#video-info') || {}).textContent || '';
+    const ym = info.match(/(\d+)\s+years?\s+ago/); if (ym) year = now - Number(ym[1]);
+    out.push({ id: m[1], title, channel: ch ? ch.textContent.trim() : '', duration: dur, year });
+  });
+  const pt = document.querySelector('yt-page-header-renderer h1, ytd-playlist-header-renderer #title, h1');
+  return { title: pt ? pt.textContent.trim() : 'YouTube playlist', items: out };
+}
+
+async function initPlaylist(listId) {
+  $('loading').hidden = true; $('playlist').hidden = false;
+  $('plGroupsSlot').appendChild($('groups'));
+  state.sel.type.add('Promo');
+  renderGroups();
+  $('plInfo').textContent = 'Scrolling through the playlist to load every video… (keep this popup open)';
+  let res;
+  try {
+    const [r] = await chrome.scripting.executeScript({ target: { tabId: state.tab.id }, func: scrapePlaylist });
+    res = r.result;
+  } catch (e) { $('plInfo').textContent = 'Couldn’t read the playlist: ' + e.message; return; }
+  const have = new Set(state.works.map(w => normUrl(w.url)));
+  const fresh = res.items.filter(v => !have.has('yt:' + v.id));
+  state.plNew = fresh;
+  $('plTitle').textContent = res.title;
+  $('plInfo').textContent = res.items.length + ' videos found · ' + (res.items.length - fresh.length) + ' already in the directory · ' + fresh.length + ' new';
+  $('plStrip').innerHTML = fresh.slice(0, 7).map(v => '<img src="https://i.ytimg.com/vi/' + v.id + '/mqdefault.jpg" alt="">').join('') +
+    (fresh.length > 7 ? '<div class="more">+' + (fresh.length - 7) + '</div>' : '');
+  const btn = $('plImport');
+  btn.textContent = fresh.length ? 'Import ' + fresh.length + ' video' + (fresh.length > 1 ? 's' : '') : 'Nothing new to import';
+  btn.disabled = !fresh.length;
+}
+
+$('plImport').onclick = async () => {
+  const btn = $('plImport'), msg = $('plMsg');
+  btn.disabled = true; setMsg(msg, 'Saving…');
+  try {
+    await loadWorks();
+    const have = new Set(state.works.map(w => normUrl(w.url)));
+    const ids = new Set(state.works.map(w => w.id));
+    const today = new Date().toISOString().slice(0, 10);
+    let added = 0;
+    state.plNew.forEach(v => {
+      if (have.has('yt:' + v.id)) return;
+      let id = slug((v.channel || '') + ' ' + v.title), base = id, n = 2;
+      while (ids.has(id)) id = base + '-' + n++;
+      ids.add(id);
+      const item = { id, title: v.title, client: v.channel, url: 'https://www.youtube.com/watch?v=' + v.id, year: v.year, added: today };
+      if (v.duration) item.duration = v.duration;
+      GROUPS.forEach(g => { item[g.key] = [...state.sel[g.key]]; });
+      state.works.push(item); added++;
+    });
+    await putFile('works.json', b64encodeUtf8(JSON.stringify(state.works, null, 2) + '\n'), 'Import ' + added + ' videos from YouTube playlist', state.sha);
+    setMsg(msg, 'Imported ' + added + ' ✓ Live in ~5 min.', 'ok');
+    btn.textContent = 'Done';
+  } catch (e) { setMsg(msg, 'Failed: ' + e.message, 'err'); btn.disabled = false; }
+};
 
 /* ---------------- actions ---------------- */
 $('gear').onclick = () => { $('settings').hidden = !$('settings').hidden; };
