@@ -1843,16 +1843,24 @@
     "id": "rho-rho-spring-release-26-mobile-vendor-cards-puzzle-integra",
     "title": "Rho Spring Release ’26: Mobile Vendor Cards, Puzzle Integration, and Smarter Bill Pay Workflows",
     "client": "Rho",
-    "url": "https://www.youtube.com/watch?v=1A2MqJRZdi4",
+    "url": "https://www.youtube.com/watch?v=1A2MqJRZdi4&list=PL_hxSJOPvmAqhsP_A8IAJ2QgHhqoa5bLN&index=2",
     "year": 2026,
     "added": "2026-11-22",
     "duration": "0:38",
     "type": [
-      "Promo"
+      "Demo"
     ],
-    "discipline": [],
-    "industry": [],
-    "tool": []
+    "discipline": [
+      "3D",
+      "2D"
+    ],
+    "industry": [
+      "Finance",
+      "SaaS"
+    ],
+    "tool": [
+      "After Effects"
+    ]
   },
   {
     "id": "elevenlabs-introducing-scribe-v2",
